@@ -2,7 +2,7 @@
 
 """
 Author:by 王林清 on 2021/11/2 21:32
-FileName:insertMongodb.py in chinese-poetry
+FileName:insertMongodb.py in shiyizhonghua_resource
 Tools:PyCharm python3.8.4
 """
 from pymongo import MongoClient

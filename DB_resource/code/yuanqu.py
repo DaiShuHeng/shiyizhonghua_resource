@@ -2,7 +2,7 @@
 
 """
 Author:by 王林清 on 2021/11/2 16:40
-FileName:yuanqu.py in chinese-poetry
+FileName:yuanqu.py in shiyizhonghua_resource
 Tools:PyCharm python3.8.4
 """
 from util import *

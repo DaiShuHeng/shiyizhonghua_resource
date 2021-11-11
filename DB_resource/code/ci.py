@@ -2,7 +2,7 @@
 
 """
 Author:by 王林清 on 2021/11/2 13:02
-FileName:ci.py in chinese-ciry
+FileName:ci.py in shiyizhonghua_resource
 Tools:PyCharm python3.8.4
 """
 from util import get_time_str, get_json, get_file_path, save_json, \
