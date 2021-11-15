@@ -22,10 +22,10 @@ if __name__ == '__main__':
     for dic in data:
         time = get_time_str()
         datas.append({
-            'title': f"论语·{dic.pop('chapter')}",
+            'title': f"论语·{dic['chapter']}",
             'author': author,
             'type': '古文',
-            'content': dic.pop('paragraphs'),
+            'content': dic['paragraphs'],
             'create_time': time,
             'update_time': time,
             'valid_delete': True
