@@ -3,7 +3,7 @@
 """
 Description: 数据处理工具类
 Author:by 王林清 on 2021/11/1 15:36
-FileName:util.py in chinese-poetry
+FileName:util.py in shiyizhonghua_resource
 Tools:PyCharm python3.8.4
 """
 import json

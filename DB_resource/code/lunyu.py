@@ -2,7 +2,7 @@
 
 """
 Author:by 王林清 on 2021/10/31 18:44
-FileName:lunyu.py in chinese-poetry
+FileName:lunyu.py in shiyizhonghua_resource
 Tools:PyCharm python3.8.4
 """
 from util import get_time_str, save_split_json, get_json
