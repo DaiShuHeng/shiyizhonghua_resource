@@ -16,12 +16,12 @@ from util import get_file_path
 
 start = time.time()
 paths = get_file_path('.')
-pattern = r'.*test.py|.*insert.*|.*util.py|.*__\w*__'
+pattern = r'.*test.py|.*insert.*|.*util.py|.*__\w*__|.*start.py'
 command = 'python {path}'
 
 for path in paths:
     if not re.fullmatch(pattern, path, re.IGNORECASE):
-        os.system(command.format(path=paths))
+        os.system(command.format(path=path))
         print(f'{path} 已执行成功！')
 os.system(command.format(path=r'./insertMongodb.py'))
 print(f'共用时{time.time()-start}s, 数据插入完毕!')
