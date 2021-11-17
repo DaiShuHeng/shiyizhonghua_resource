@@ -70,13 +70,13 @@ def save_split_json(filename: str, jsons):
     :param jsons: 要存储的json对象(字典列表)
     """
     idx = 0
-    while len(jsons) >= 10000:
-        split_json = jsons[:10000]
-        jsons = jsons[10000:]
-        save_json(f'{filename}_{idx * 10000}.json', split_json)
+    while len(jsons) >= 1000:
+        split_json = jsons[:1000]
+        jsons = jsons[1000:]
+        save_json(f'{filename}_{idx * 1000}.json', split_json)
         idx += 1
     if idx:
-        save_json(f'{filename}_{idx * 10000}.json', jsons)
+        save_json(f'{filename}_{idx * 1000}.json', jsons)
     else:
         save_json(f'{filename}.json', jsons)
 
