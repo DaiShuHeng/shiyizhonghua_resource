@@ -292,6 +292,15 @@ vi /etc/sudoers
 chmod u-w /etc/sudoers
 ```
 
+#### 查看后台进程
+
+```sh
+ps -ef | grep elastic
+
+#杀掉进程（xxx为端口号）
+kill -9 xxx
+```
+
 ## 二、ElasticSearchHead可视化工具
 
 ### 通过Chrome插件安装
@@ -300,5 +309,87 @@ chmod u-w /etc/sudoers
 
 ![eshead](./eshead.png)
 
+## 三、kibana
 
+部署在本地，通过更改配置文件即可连接服务器
+
+### 1、安装
+
+```sh
+wget https://artifacts.elastic.co/downloads/kibana/kibana-7.15.2-linux-x86_64.tar.gz
+```
+
+### 2、解压缩
+
+```sh
+tar -xzf kibana-7.15.2-linux-x86_64.tar.gz
+```
+
+### 3、配置文件
+
+```sh
+vim /config/kibana.yml
+
+server.port: 5601
+server.host: "localhost"
+server.name: "localhost"
+elasticsearch.hosts: ["http://114.55.236.49:9200","http://47.100.193.135:9200","http://116.62.195.199:9200"]
+i18n.locale: "zh-CN"
+```
+
+### 4、启动
+
+```sh
+./bin/kibana
+
+#后台运行
+nohup /usr/local/kibana/bin/kibana &
+```
+
+## 四、Metricbeat
+
+监测集群情况
+
+### 1、安装（与Elasticsearch版本保持一致且安装在同一服务器内）
+
+```sh
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.15.2-linux-x86_64.tar.gz
+tar xzvf metricbeat-7.15.2-linux-x86_64.tar.gz
+```
+
+### 2、在 Metricbeat 中启用并配置 Elasticsearch x-pack 模块
+
+```sh
+#启用模块
+./metricbeat modules enable elasticsearch-xpack
+
+#配置模块
+cd modules.d
+vim elasticsearch-xpack.yml
+
+#将服务器地址添加到hosts设置
+hosts: ["http://114.55.236.49:9200"]
+```
+
+### 3、配置 Metricbeat 以发送至监测集群
+
+```sh
+vim metricbeat.yml
+```
+
+```yml
+output.elasticsearch:  
+	hosts: ["114.55.236.49:9200","47.100.193.135:9200","116.62.195.199:9200"] 
+```
+
+### 4、启动Metricbeat
+
+```sh
+sudo chown root metricbeat.yml 
+sudo chown root modules.d/system.yml 
+sudo ./metricbeat -e
+
+#后台运行
+nohup ./metricbeat -e -c metricbeat.yml -d "publish" & > nohup.out
+```
 
