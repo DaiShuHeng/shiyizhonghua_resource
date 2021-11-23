@@ -393,3 +393,59 @@ sudo ./metricbeat -e
 nohup ./metricbeat -e -c metricbeat.yml -d "publish" & > nohup.out
 ```
 
+## 五、Monstache
+
+数据库中间件：同步MongoDB与Elasticsearch数据
+
+### 1、安装
+
+下载地址：https://github.com/rwynn/monstache/releases
+
+版本信息：
+
+| Monstache version | Git branch (used to build plugin) | Docker tag   | Description             | Elasticsearch   | MongoDB      | Status     |
+| ----------------- | --------------------------------- | ------------ | ----------------------- | --------------- | ------------ | ---------- |
+| 6                 | rel6                              | rel6, latest | MongoDB, Inc. go driver | Version 7+      | Version 2.6+ | Supported  |
+| 5                 | rel5                              | rel5         | MongoDB, Inc. go driver | Version 6       | Version 2.6+ | Supported  |
+| 4                 | master                            | rel4         | mgo community go driver | Version 6       | Version 3    | Deprecated |
+| 3                 | Rel3                              | rel3         | mgo community go driver | Version 2 and 5 | Version 3    | Deprecated |
+
+解压缩下载并调整您的 PATH 变量
+
+查看版本号
+
+```sh
+monstache -v
+```
+
+### 2、修改配置文件
+
+```sh
+vim config.toml
+```
+
+```toml
+# connect to MongoDB using the following URL 这项配置添加Mongodb的地址
+mongo-url = "mongodb://用户名:密码@服务器地址:27017"
+# connect to the Elasticsearch REST API at the following node URLs
+elasticsearch-urls = ["http://服务器地址:9200"]
+direct-read-namespaces = ["shiyizhonghua.data"]  #指定mongo中要导出数据库和集合
+#elasticsearch-user = ""
+#elasticsearch-password = ""    #ES服务器的密码
+elasticsearch-max-conns = 8
+dropped-collections = true
+dropped-databases = true
+resume = true
+resume-strategy = 0
+verbose = true
+elasticsearch-validate-pem-file = false
+[[mapping]]
+namespace = "shiyizhonghua.data"
+index = "shiyizhonghua"      #映射到ES中的索引名称
+```
+
+### 3、运行
+
+```sh
+monstache -f /path/to/config.toml
+```
