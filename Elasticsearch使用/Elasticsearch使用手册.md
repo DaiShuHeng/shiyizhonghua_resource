@@ -449,3 +449,229 @@ index = "shiyizhonghua"      #映射到ES中的索引名称
 ```sh
 monstache -f /path/to/config.toml
 ```
+
+## 六、插件（ik、pinyin）
+
+### 1、安装
+
+```shell
+#注意插件的版本要与es的版本一致
+./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.15.2/elasticsearch-analysis-ik-7.15.2.zip
+
+./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.15.2/elasticsearch-analysis-pinyin-7.15.2.zip
+```
+
+### 2、使用
+
+新建索引
+
+```
+PUT /syzh
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "ik_smart_pinyin": {
+          "type": "custom", //自定义分析器
+          "tokenizer": "ik_smart", //ik插件
+          "filter": [
+            "pinyin_filter" //筛选
+          ]
+        },
+        "ik_max_word_pinyin": {
+          "type": "custom",
+          "tokenizer": "ik_max_word",
+          "filter": [
+            "pinyin_filter"
+          ]
+        }
+      },
+      "filter": {
+        "pinyin_filter": {
+          "type": "pinyin", //pinyin插件
+          "keep_separate_first_letter": false,
+          "keep_full_pinyin": true,
+          "keep_original": true,
+          "limit_first_letter_length": 16,
+          "lowercase": true,
+          "remove_duplicated_term": true
+        }
+      }
+    },
+    "number_of_shards": 3, //分片数量
+    "number_of_replicas": 2 //副本数量
+  }
+}
+```
+
+配置mapping
+
+```
+PUT syzh/_mapping
+{
+  "properties": {
+    "author": {
+      "properties": {
+        "desc": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "name": {
+          "type": "text",
+          "analyzer": "ik_max_word_pinyin",
+          "search_analyzer": "ik_smart_pinyin",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "time": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "text",
+      "analyzer": "ik_max_word_pinyin",
+      "search_analyzer": "ik_smart_pinyin",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "create_time": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "ik_max_word_pinyin",
+      "search_analyzer": "ik_smart_pinyin",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "type": {
+      "type": "text",
+      "analyzer": "ik_max_word_pinyin",
+      "search_analyzer": "ik_smart_pinyin",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "update_time": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "valid_delete": {
+      "type": "boolean"
+    }
+  }
+}
+```
+
+pinyin插件可选参数
+
+```
+keep_first_letter:启用此选项时，例如：刘德华> ldh，默认值：true
+keep_separate_first_letter:启用此选项后，将单独保留首字母，例如：刘德华> l, d, h, 默认值：false，注意：由于术语过于频繁，查询结果可能过于模糊
+limit_first_letter_length:设置 first_letter 结果的最大长度，默认值：16
+keep_full_pinyin:启用此选项时，例如：刘德华> [ liu, de, hua]，默认值：true
+keep_joined_full_pinyin:启用此选项时，例如：刘德华> [ liudehua]，默认值：false
+keep_none_chinese:结果中保留非中文字母或数字，默认：true
+keep_none_chinese_together:将非中文字母放在一起，默认值：true，例如：DJ音乐家-> DJ, yin, yue, jia, 当设置为 时false，例如：DJ音乐家-> D, J, yin, yue, jia, 注意：keep_none_chinese应先启用
+keep_none_chinese_in_first_letter:首字母保留非中文字母，例如：刘德华AT2016-> ldhat2016，默认：true
+keep_none_chinese_in_joined_full_pinyin:将非中文字母保留在连接全拼音中，例如：刘德华2016-> liudehua2016，默认值：false
+none_chinese_pinyin_tokenize:如果非中文字母是拼音，则将它们拆分成单独的拼音词，默认：true，例如：liudehuaalibaba13zhuanghan-> liu, de, hua, a, li, ba, ba, 13, zhuang, han, , 注意： keep_none_chinese并且keep_none_chinese_together应该先启用
+keep_original:启用此选项时，也会保留原始输入，默认值：false
+lowercase:小写非中文字母，默认：true
+trim_whitespace:默认值：真
+remove_duplicated_term:启用此选项后，将删除重复的术语以保存索引，例如：de的> de，默认值：false，注意：可能会影响与位置相关的查询
+ignore_pinyin_offset:6.0后，offset被严格限制，不允许重叠token，有了这个参数，overlapped token将被ignore offset允许，请注意，所有与位置相关的查询或高亮都会变得不正确，你应该使用多字段并为不同的设置指定不同的设置查询目的。如果您需要偏移，请将其设置为false。默认值：真。
+```
+
+### 3、一些报错解决
+
+#### (1):权限问题
+
+```java
+WARNING: plugin requires additional permissions
+```
+
+解决办法：以root用户执行安装命令
+
+```
+su - root
+```
+
+#### (2):重复插件
+
+```java
+Exception in thread "main" java.lang.IllegalStateException: duplicate plugin: - Plugin information:
+Name: analysis-pinyin
+Description: Pinyin Analysis for Elasticsearch
+Version: 7.15.2
+Elasticsearch Version: 7.15.2
+Java Version: 1.8
+Native Controller: false
+Licensed: false
+Type: isolated
+Extended Plugins: []
+ * Classname: org.elasticsearch.plugin.analysis.pinyin.AnalysisPinyinPlugin
+        at org.elasticsearch.plugins.PluginsService.findBundles(PluginsService.java:406)
+        at org.elasticsearch.plugins.PluginsService.getPluginBundles(PluginsService.java:397)
+        at org.elasticsearch.plugins.InstallPluginAction.jarHellCheck(InstallPluginAction.java:829)
+        at org.elasticsearch.plugins.InstallPluginAction.loadPluginInfo(InstallPluginAction.java:804)
+        at org.elasticsearch.plugins.InstallPluginAction.installPlugin(InstallPluginAction.java:850)
+        at org.elasticsearch.plugins.InstallPluginAction.execute(InstallPluginAction.java:233)
+        at org.elasticsearch.plugins.InstallPluginCommand.execute(InstallPluginCommand.java:84)
+        at org.elasticsearch.cli.EnvironmentAwareCommand.execute(EnvironmentAwareCommand.java:75)
+        at org.elasticsearch.cli.Command.mainWithoutErrorHandling(Command.java:114)
+        at org.elasticsearch.cli.MultiCommand.execute(MultiCommand.java:95)
+        at org.elasticsearch.cli.Command.mainWithoutErrorHandling(Command.java:114)
+        at org.elasticsearch.cli.Command.main(Command.java:79)
+        at org.elasticsearch.plugins.PluginCli.main(PluginCli.java:36)
+```
+
+解决办法：删除已下载插件
+
+```shell
+# 查看插件列表
+bin/elasticsearch-plugin list
+
+cd plugins/
+ls -a
+rm -rf xxx
+```
+
