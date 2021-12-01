@@ -675,3 +675,451 @@ ls -a
 rm -rf xxx
 ```
 
+## 七、查询
+
+基于JSON，查询DSL定义查询
+
+### 1、查询所有文档
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+"query":代表一个查询对象，里面可以有不同的查询属性
+
+"match_all":查询类型 (match_all、match、term、range等)
+
+{查询条件}:查询条件根据类型不同，写法也有差异
+
+**查询结果：**
+
+```http
+{
+  "took" 【查询花费时间，单位毫秒】: 35,
+  "timed_out" 【是否超时】: false,
+  "_shards" 【分片信息】: {
+    "total"【总数】 : 3,
+    "successful"【成功数】 : 3,
+    "skipped"【忽略数】 : 0,
+    "failed"【失败数】 : 0
+  },
+  "hits" 【搜索命中结果】: {
+    "total"【搜索条件匹配的文档总数】 : {
+      "value"【总命中计数的值】 : 10000,
+      "relation"【计数规则，eq表示计数准确、gte表示计数不准确】 : "gte"
+    },
+    "max_score"【匹配度分值】 : 1.0,
+    "hits"【命中结果集合】 : [···
+    }
+   ]
+  }
+}   
+```
+
+### 2、匹配查询
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "match": {
+      "author.name": "杜甫"
+    }
+  }
+}
+```
+
+### 3、字段匹配查询
+
+multi_match与match类似，它的特点是可以在多个字段中查询
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "杜甫",
+      "fields": ["author.name","content"]
+    }
+  }
+}
+```
+
+### 4、关键词精确查询
+
+term查询，精确的关键词匹配查询，不对查询条件进行分词
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "term": {
+      "author.name": {
+        "value": "陶渊明"
+      }
+    }
+  }
+}
+```
+
+### 5、多关键词精确查询
+
+terms查询和term查询一样，但允许指定多值进行匹配。
+
+如果这个字段包含了指定值的任何一个值，那么这个文档满足条件
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "terms": {
+      "author.name": [
+        "李白",
+        "杜甫"
+      ]
+    }
+  }
+}
+```
+
+### 6、指定查询字段
+
+默认情况下，Elasticsearch 在搜索的结果中，会把文档中保存在_source 的所有字段都返回。 如果我们只想获取其中的部分字段，我们可以添加_source 的过滤
+
+```http
+GET shiyizhonghua/_search
+{
+  "_source": ["author.name","author.time","type","content","author.desc","title"]
+  , "query": {
+    "terms": {
+      "title": ["琵琶行"]
+    }
+  }
+}
+```
+
+### 7、过滤字段
+
+includes:指定想要显示的字段
+
+excludes:指定不想要显示的字段
+
+```http
+GET shiyizhonghua/_search
+{
+  "_source": {
+    "includes": ["author.name","author.time","type","content","author.desc","title"]
+  }
+  , "query": {
+    "terms": {
+      "title": ["琵琶行"]
+    }
+  }
+}
+```
+
+### 8、组合查询
+
+`bool`把各种其它查询通过`must`(必须 )、`must_not`(必须不)、`should`(应该)的方式进行组合
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "author.name": "李白"
+          }
+        }
+      ]
+      , "must_not": [
+        {
+          "match": {
+            "author.time": "宋"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+### 9、范围查询
+
+range 查询找出那些落在指定区间内的数字或者时间。range 查询允许以下字符
+
+| 操作符 | 说明       |
+| ------ | ---------- |
+| gt     | 大于>      |
+| gte    | 大于等于>= |
+| lt     | 小于<      |
+| lte    | 小于等于<= |
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "range": {
+      "update_time": {
+        "gte": 10,
+        "lte": 20
+      }
+    }
+  }
+}
+```
+
+### 10、模糊查询
+
+返回包含与搜索字词相似的字词的文档
+
+fuzziness可修改编辑距离。一般为默认值AUTO，根据术语的长度生成编辑距离
+
+```http
+GET shiyizhonghua/_search
+{
+"query": {
+   "fuzzy": {
+     "author.time": {
+       "value": "宋"，
+       "fuzziness": "2"
+      }
+    }
+  }
+}
+```
+
+### 11、单字段排序
+
+sort 可以让我们按照不同的字段进行排序，并且通过 order 指定排序的方式 （desc 降序，asc 升序）
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "term": {
+      "author.name": {
+        "value": "李白"
+      }
+    }
+  },
+  "sort": [
+    {
+      "author.name.keyword": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+```
+
+### 12、多字段排序
+
+假定我们想要结合使用 author.name.keyword 和 _score 进行查询，并且匹配的结果首先按照姓名排序，然后按照相关性得分排序
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "term": {
+      "author.name": {
+        "value": "李白"
+      }
+    }
+  },
+  "sort": [
+    {
+      "author.name.keyword": {
+        "order": "desc"
+      }
+    },
+    {
+      "_score": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+```
+
+### 13、高亮查询
+
+在进行关键字搜索时，搜索出的内容中的关键字会显示不同的颜色，称之为高亮
+
+Elasticsearch 可以对查询内容中的关键字部分，进行标签和样式(高亮)的设置。 在使用 match 查询的同时，加上一个 highlight 属性:
+
+- pre_tags:前置标签
+- post_tags:后置标签
+- fields:需要高亮的字段
+- title:这里声明 title 字段需要高亮，后面可以为这个字段设置特有配置，也可以空
+
+```
+GET shiyizhonghua/_search
+{
+  "query": {
+    "term": {
+      "author.name": {
+        "value": "李白"
+      }
+    }
+  },
+  "highlight": {
+    "pre_tags": "<font color='red'>",
+    "post_tags": "</font>",
+    "fields": {
+      "author.name": {}
+    }
+  }
+}
+```
+
+### 14、分页查询
+
+from:当前页的起始索引，默认从 0 开始。 from = (pageNum - 1) * size 
+
+size:每页显示多少条
+
+```http
+GET shiyizhonghua/_search
+{
+  "query": {
+    "term": {
+      "author.name": {
+        "value": "李白"
+      }
+    }
+  },
+  "from": 0,
+  "size": 10
+}
+```
+
+### 15、聚合查询
+
+聚合允许使用者对 es 文档进行统计分析，类似与关系型数据库中的 group by，当然还有很 多其他的聚合，例如取最大值、平均值等等
+
+#### 对某个字段取最大值 max
+
+```http
+{
+ "aggs":{
+	"max_age":{
+		"max":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+#### 对某个字段取最小值 min
+
+```http
+{
+ "aggs":{
+	"min_age":{
+		"min":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+#### 对某个字段求和 sum
+
+```http
+{
+ "aggs":{
+	"sum_age":{
+		"sum":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+#### 对某个字段取平均值 avg
+
+```http
+{
+ "aggs":{
+	"avg_age":{
+		"avg":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+#### 对某个字段的值进行去重之后再取总数
+
+```http
+{
+ "aggs":{
+	"distinct_age":{
+		"cardinality":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+#### State 聚合
+
+对某个字段一次性返回 count，max，min，avg 和 sum 五个指标
+
+```http
+{
+ "aggs":{
+	"stats_age":{
+		"stats":{"field":"age"}
+		} 
+	},
+	"size":0 
+}
+```
+
+### 16、桶聚合查询
+
+桶聚和相当于 sql 中的 group by 语句
+
+#### terms 聚合，分组统计
+
+```http
+{
+  "aggs": {
+    "age_groupby": {
+      "terms": {
+        "field": "age"
+      }
+    }
+  },
+  "size": 0
+}
+```
+
+#### 在 terms 分组下再进行聚合
+
+```http
+{
+  "aggs": {
+    "age_groupby": {
+      "terms": {
+        "field": "age"
+      },
+      "aggs":
+      {
+      	"sum":{"field":"age"}
+      }
+    }
+  },
+  "size": 0
+}
+```
+
