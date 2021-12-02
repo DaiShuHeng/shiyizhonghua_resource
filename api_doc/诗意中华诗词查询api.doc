@@ -1,0 +1,637 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:w="urn:schemas-microsoft-com:office:word"
+    xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <style type="text/css">
+        table  
+        {  
+            border-collapse: collapse;
+            border: none;  
+            width: 100%;  
+        }  
+        td,tr  
+        {  
+            border: solid #CCC 1px;
+            padding:3px;
+            font-size:9pt;
+        } 
+        .codestyle{
+            word-break: break-all;
+            mso-highlight:rgb(252, 252, 252);
+            padding-left: 5px; background-color: rgb(252, 252, 252); border: 1px solid rgb(225, 225, 232);
+        }
+        img {
+            width:100;
+        }
+    </style>
+    <meta name=ProgId content=Word.Document>
+    <meta name=Generator content="Microsoft Word 11">
+    <meta name=Originator content="Microsoft Word 11">
+    <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+    <body><h1>1、poetry</h1><div style="margin-left:0px;"><h2>1.1、诗词类型分页查询</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>按诗词类型分页查询</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://zhuaowei.top:8081/poetry/type?type=诗</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>GET </li>
+</ul>
+<h5>参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>诗词类型</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>查询页码（从0开始）</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>分页大小（默认为10）</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>  {
+    "code": 200,
+    "mes": "success",
+    "data": {
+        "content": [
+            {
+                "id": "o9YOVX0BI85dbDEsQO62",
+                "title": "度关山",
+                "author": {
+                    "name": "曹操",
+                    "time": "汉",
+                    "desc": "魏武帝曹操（155年—220年3月15日），字孟德，一名吉利，小字阿瞒。沛国谯县（今安徽省亳州市）人。中国古代杰出的政治家、军事家、文学家、书法家、诗人。东汉末年权相，太尉曹嵩之子，曹魏的奠基者。曹操少年机警，任侠放荡，不治行业。二十岁时，举孝廉为郎，授洛阳北部尉。后任骑都尉，参与镇压黄巾军。迁济南相，奏免贪吏，禁断淫祀。征为东郡太守，不就，称疾归家。及董卓擅政，乃散家财起兵，与袁绍等共讨董卓。初平三年（192年）据兖州，分化诱降黄巾军三十余万，选其精锐编为青州军，自此兵力大振，先后击败袁术、陶谦、吕布等部。建安元年（196年），迎汉献帝至许（今河南许昌东），自为司空，行车骑将军事，总揽朝政。建安五年（200年），在官渡之战中大败袁绍主力，又先后削平袁尚、袁谭等势力。建安十二年（207年），击破乌桓，统一北方。建安十三年（208年），进位丞相。同年进攻荆州，与孙权、刘备联军展开赤壁之战，败归。建安十八年（213年），封魏公。建安二十年（215年），征张鲁，取汉中。次年进爵为魏王。建安二十五年（220年），病死于洛阳，儿子曹丕代汉称帝后，追尊曹操为太祖武皇帝，葬于高陵。"
+                },
+                "type": "诗",
+                "content": [
+                    "天地间，人为贵。",
+                    "立君牧民，为之轨则。",
+                    "车辙马迹，经纬四极。",
+                    "黜陟幽明，黎庶繁息。",
+                    "於铄贤圣，总统邦域。",
+                    "封建五爵，井田刑狱。",
+                    "有燔丹书，无普赦赎。",
+                    "皋陶甫侯，何有失职？",
+                    "嗟哉后世，改制易律。",
+                    "劳民为君，役赋其力。",
+                    "舜漆食器，畔者十国，",
+                    "不及唐尧，采椽不斫。",
+                    "世叹伯夷，欲以厉俗。",
+                    "侈恶之大，俭为共德。",
+                    "许由推让，岂有讼曲？",
+                    "兼爱尚同，疏者为戚。"
+                ],
+                "createTime": "2021-11-16 12:57:30",
+                "updateTime": "2021-11-16 12:57:30",
+                "valid": true
+            },
+            // 省略9条...
+        ],
+        "pageable": {
+            "sort": {
+                "empty": true,
+                "sorted": false,
+                "unsorted": true
+            },
+            "offset": 0,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "totalPages": 1000,
+        "totalElements": 10000,
+        "last": false,
+        "number": 0,
+        "size": 10,
+        "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+        "numberOfElements": 10,
+        "first": true,
+        "empty": false
+    }
+}</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">mes</td>
+<td style="text-align: left;">string</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>数据对象</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<ul>
+<li>诗词列表在content中</li>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>1.2、诗词作者分页查询</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>按作者名字查询</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://zhuaowei.top:8081/poetry/name?authorName=李白</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>GET </li>
+</ul>
+<h5>参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">authorName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>作者名字</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>查询页码（从0开始）</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>分页大小（默认为10）</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>  {
+    "code": 200,
+    "mes": "success",
+    "data": {
+        "content": [
+            {
+                "id": "39qjVX0BI85dbDEs13Kw",
+                "title": "杂曲歌辞 长相思三首 二",
+                "author": {
+                    "name": "李白",
+                    "time": "唐",
+                    "desc": "李白，字太白，陇西成纪人，凉武昭王暠九世孙。或曰山东人，或曰蜀人。白少有逸才，志气宏放，飘然有超世之心。初隐岷山，益州长史苏颋见而异之曰：“是子天才英特，可比相如。”天宝初，至长安，往见贺知章。知章见其文，叹曰：“子谪仙人也。”言于明皇，召见金銮殿，奏颂一篇。帝赐食，亲为调羹。有诏供奉翰林，白犹与酒徒饮于巿。帝坐沈香亭子，意有所感，欲得白为乐章，召入，而白已醉。左右以水颒面，稍解，援笔成文，婉丽精切。帝爱其才，数宴见。白常侍帝，醉，使高力士脱\uD86D\uDD87。力士素贵，耻之，摘其诗以激杨贵妃。帝欲官白，妃輙沮止。白自知不为亲近所容，恳求还山。帝赐金放还，乃浪迹江湖，终日沈饮。永王璘都督江陵，辟为僚佐。璘谋乱，兵败，白坐长流夜郎，会赦得还。族人阳冰为当涂令，白往依之。代宗立，以左拾遗召，而白已卒。文宗时，诏以白歌诗、裴旻劒舞、张旭草书为三绝云。集三十卷，今编诗二十五卷。"
+                },
+                "type": "诗",
+                "content": [
+                    "日色已尽花含烟，月明欲素愁不眠。",
+                    "赵瑟初停凤凰柱，蜀琴欲奏鸳鸯弦。",
+                    "此曲有意无人传，愿随春风寄燕然，忆君迢迢隔青天。",
+                    "昔日横波目，今成流泪泉。",
+                    "不信妾肠断，归来看取明镜前。"
+                ],
+                "createTime": "2021-11-16 12:59:45",
+                "updateTime": "2021-11-16 12:59:45",
+                "valid": true
+            },
+            // 省略9条
+        ],
+        "pageable": {
+            "sort": {
+                "empty": true,
+                "sorted": false,
+                "unsorted": true
+            },
+            "offset": 0,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "totalPages": 128,
+        "totalElements": 1280,
+        "last": false,
+        "number": 0,
+        "size": 10,
+        "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+        "numberOfElements": 10,
+        "first": true,
+        "empty": false
+    }
+}</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">mes</td>
+<td style="text-align: left;">string</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>数据对象</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul></div><h2>1.3、作者朝代分页查询</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>按作者朝代分页查询</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://zhuaowei.top:8081/poetry/time?authorTime=宋</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>GET </li>
+</ul>
+<h5>参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">authorTime</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>作者朝代</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>查询页码（从0开始）</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>分页大小（默认为10）</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>  {
+    "code": 200,
+    "mes": "success",
+    "data": {
+        "content": [
+            {
+                "id": "_tYOVX0BI85dbDEsR-6F",
+                "title": "导引",
+                "author": {
+                    "name": "和岘",
+                    "time": "宋",
+                    "desc": "--"
+                },
+                "type": "词",
+                "content": [
+                    "气和玉烛，睿化著鸿明。",
+                    "缇管一阳生。",
+                    "郊禋盛礼燔柴毕，旋轸凤凰城。",
+                    "森罗仪卫振华缨。",
+                    "载路溢欢声。",
+                    "皇图大业超前古，垂象泰阶平。",
+                    "岁时丰衍，九土乐升平。",
+                    "睹寰海澄清。",
+                    "道高尧舜垂衣治，日月并文明。",
+                    "嘉禾甘露登歌荐，云物焕祥经。",
+                    "兢兢惕惕持谦德，未许禅云亭。"
+                ],
+                "createTime": "2021-11-16 12:57:30",
+                "updateTime": "2021-11-16 12:57:30",
+                "valid": true
+            },
+            // 省略9条
+        ],
+        "pageable": {
+            "sort": {
+                "empty": true,
+                "sorted": false,
+                "unsorted": true
+            },
+            "offset": 0,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "totalPages": 1000,
+        "totalElements": 10000,
+        "last": false,
+        "number": 0,
+        "size": 10,
+        "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+        "numberOfElements": 10,
+        "first": true,
+        "empty": false
+    }
+}</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">mes</td>
+<td style="text-align: left;">string</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>数据对象</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul></div><h2>1.4、诗词内容分页查询</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>按诗词的内容分页查询</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://zhuaowei.top:8081/poetry/content?content=采菊东篱下</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>GET </li>
+</ul>
+<h5>参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">content</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>诗词内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>查询页码（从0开始）</td>
+</tr>
+<tr>
+<td style="text-align: left;">limit</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>分页大小（默认为10）</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "mes": "success",
+    "data": {
+        "content": [
+            {
+                "id": "ZdckVX0BI85dbDEsWtht",
+                "title": "偈颂一百六十九首  其三五",
+                "author": {
+                    "name": "释智朋",
+                    "time": "宋",
+                    "desc": "释智朋，四明（今浙江宁波）人，俗姓黄。居衡州华药寺，建康清凉寺。高宗绍兴七年（一一三七）住婺州天宁寺（《罗湖野录》卷四），后退居明州瑞岩。为青原下十三世，宝峰照禅师法嗣。事见《五灯会元》卷一四。"
+                },
+                "type": "诗",
+                "content": [
+                    "行路难，有何难。",
+                    "不见陶渊明，采菊东篱下，悠然见南山。",
+                    "彼此丈夫，莫受人瞒。"
+                ],
+                "createTime": "2021-11-16 12:58:39",
+                "updateTime": "2021-11-16 12:58:39",
+                "valid": true
+            },
+            // 省略9条
+        ],
+        "pageable": {
+            "sort": {
+                "empty": true,
+                "sorted": false,
+                "unsorted": true
+            },
+            "offset": 0,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "totalPages": 1,
+        "totalElements": 6,
+        "last": true,
+        "number": 0,
+        "size": 10,
+        "sort": {
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+        "numberOfElements": 6,
+        "first": true,
+        "empty": false
+    }
+}</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">mes</td>
+<td style="text-align: left;">string</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>数据对象</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul></div><h2>1.5、按id查询诗词</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>按诗词的内容分页查询，id查询，结果唯一</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://zhuaowei.top:8081/poetry/get?id=EOESW30BI85dbDEs0CDx</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>GET </li>
+</ul>
+<h5>参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>诗词id</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "mes": "success",
+    "data": {
+        "id": "EOESW30BI85dbDEs0CDx",
+        "title": "饮酒·其五",
+        "author": {
+            "name": "陶渊明",
+            "time": "魏晋",
+            "desc": ""
+        },
+        "type": "诗",
+        "content": [
+            "结庐在人境，而无车马喧。",
+            "问君何能尔？心远地自偏。",
+            "采菊东篱下，悠然见南山。",
+            "山气日夕佳，飞鸟相与还。",
+            "此中有真意，欲辨已忘言。"
+        ],
+        "createTime": "2021-11-26 14:46:18",
+        "updateTime": "2021-11-26 14:46:18",
+        "valid": true
+    }
+}</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">mes</td>
+<td style="text-align: left;">string</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>数据对象</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul></div></div></body></html>
