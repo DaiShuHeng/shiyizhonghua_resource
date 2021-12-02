@@ -12,8 +12,9 @@ if __name__ == '__main__':
     yq_json = get_json(r'./../data/yuanqu/yuanqu.json')
     for yq in yq_json:
         time = get_time_str()
+        name = yq['author'].split('《')[0]
         author = {
-            'name': yq['author'],
+            'name': name,
             'time': '元',
             'desc': '',
         }

@@ -54,31 +54,33 @@ def get_time_str():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
-def save_json(filename: str, jsons):
+def save_json(filename: str, jsons, dir_name):
     """
     :param filename: 文件名
     :param jsons: 要存储的json对象(字典列表)
+    :param dir_name: 存储目录
     """
-    with open(f'./../database_json/{filename}', 'w', encoding='utf-8') as f:
+    with open(f'{dir_name}/{filename}', 'w', encoding='utf-8') as f:
         json.dump(jsons, f, indent=4, ensure_ascii=False, skipkeys=True)
 
 
-def save_split_json(filename: str, jsons):
+def save_split_json(filename: str, jsons, dir_name=r'./../database_json'):
     """
     分片存储json文件，每个最多10000首
     :param filename: 文件名
     :param jsons: 要存储的json对象(字典列表)
+    :param dir_name: 存储目录
     """
     idx = 0
     while len(jsons) >= 1000:
         split_json = jsons[:1000]
         jsons = jsons[1000:]
-        save_json(f'{filename}_{idx * 1000}.json', split_json)
+        save_json(f'{filename}_{idx * 1000}.json', split_json, dir_name)
         idx += 1
     if idx:
-        save_json(f'{filename}_{idx * 1000}.json', jsons)
+        save_json(f'{filename}_{idx * 1000}.json', jsons, dir_name)
     else:
-        save_json(f'{filename}.json', jsons)
+        save_json(f'{filename}.json', jsons, dir_name)
 
 
 def get_json(path: str):
